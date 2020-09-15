@@ -8,23 +8,15 @@ import (
 	"io/ioutil"
 )
 
-func AESencode(data []byte, key string) ([]byte, error) {
-	keyByte := []byte(key)
-	block, err := aes.NewCipher(keyByte)
-	if err != nil {
-		return nil, err
+func EncryptDir(root string, key string) error {
+	files, err := enumFiles(root)
+	for _, file := range files {
+		err = EncryptFile(file, key)
+		if err != nil {
+			return err
+		}
 	}
-
-	cipherData := make([]byte, aes.BlockSize+len(data))
-	initVec := cipherData[:aes.BlockSize]
-	_, err = io.ReadFull(rand.Reader, initVec)
-	if err != nil {
-		return nil, err
-	}
-
-	stream := cipher.NewCFBEncrypter(block, initVec)
-	stream.XORKeyStream(cipherData[aes.BlockSize:], data)
-	return cipherData, nil
+	return nil
 }
 
 func EncryptFile(filename string, key string) error {
@@ -43,4 +35,23 @@ func EncryptFile(filename string, key string) error {
 		return err
 	}
 	return nil
+}
+
+func AESencode(data []byte, key string) ([]byte, error) {
+	keyByte := []byte(key)
+	block, err := aes.NewCipher(keyByte)
+	if err != nil {
+		return nil, err
+	}
+
+	cipherData := make([]byte, aes.BlockSize+len(data))
+	initVec := cipherData[:aes.BlockSize]
+	_, err = io.ReadFull(rand.Reader, initVec)
+	if err != nil {
+		return nil, err
+	}
+
+	stream := cipher.NewCFBEncrypter(block, initVec)
+	stream.XORKeyStream(cipherData[aes.BlockSize:], data)
+	return cipherData, nil
 }

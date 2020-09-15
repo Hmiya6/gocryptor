@@ -2,7 +2,6 @@ package main
 
 import (
 	"bufio"
-	"flag"
 	"fmt"
 	"log"
 	"os"
@@ -11,22 +10,6 @@ import (
 
 // wrapper function to get password
 func setAESKey() string {
-	var (
-		envKey string
-		pass   string
-	)
-	flag.StringVar(&envKey, "e", "", "environment key")
-	flag.StringVar(&pass, "p", "", "password")
-	flag.Parse()
-
-	if pass != "" {
-		return pass
-	} else if envKey != "" {
-		pass = getKeyFromEnv(envKey)
-		if pass != "" {
-			return pass
-		}
-	}
 	pass, err := getKeyFromStdin()
 	if err != nil {
 		log.Fatal("Error setting encryption key:", err)
