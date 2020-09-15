@@ -10,6 +10,9 @@ import (
 
 func DecryptDir(root string, key string) error {
 	files, err := enumFiles(root)
+
+	catchSIGINT()
+
 	for _, file := range files {
 		fmt.Println(file)
 		err = DecryptFile(file, key)

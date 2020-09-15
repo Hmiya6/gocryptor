@@ -12,6 +12,9 @@ import (
 
 func EncryptDir(root string, key string) error {
 	files, err := enumFiles(root)
+
+	catchSIGINT()
+
 	for _, file := range files {
 		fmt.Println(os.Args[0] + file)
 		err = EncryptFile(file, key)
