@@ -7,5 +7,8 @@ AES (CFB) is used.
 ```
 git clone github.com/Hmiya6/gocryptor/
 go build . -o gocryptor
-./gocryptor <target directory> [e: encrypt] [d: decrypt]
+sudo ./gocryptor <target directory> [e: encrypt] [d: decrypt]
 ```
+
+## TODO
+* safe keyboard interrupt
