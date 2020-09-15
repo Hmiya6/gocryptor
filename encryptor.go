@@ -4,13 +4,11 @@ import (
 	"crypto/aes"
 	"crypto/cipher"
 	"crypto/rand"
-	"fmt"
 	"io"
 	"io/ioutil"
-	"log"
 )
 
-func EncodeAES(data []byte, key string) ([]byte, error) {
+func AESencode(data []byte, key string) ([]byte, error) {
 	keyByte := []byte(key)
 	block, err := aes.NewCipher(keyByte)
 	if err != nil {
@@ -34,10 +32,8 @@ func EncryptFile(filename string, key string) error {
 	if err != nil {
 		return err
 	}
-	fmt.Println(string(data))
-	fmt.Println(len(string(data)))
 
-	data, err = EncodeAES(data, key)
+	data, err = AESencode(data, key)
 	if err != nil {
 		return err
 	}
@@ -47,11 +43,4 @@ func EncryptFile(filename string, key string) error {
 		return err
 	}
 	return nil
-}
-
-func main() {
-	err := EncryptFile("testdir/test.txt", "0123456789abcdef")
-	if err != nil {
-		log.Fatal(err)
-	}
 }
