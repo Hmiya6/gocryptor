@@ -6,10 +6,11 @@ import (
 	"fmt"
 	"log"
 	"os"
+	"strings"
 )
 
 // wrapper function to get password
-func setKey() string {
+func setAESKey() string {
 	var (
 		envKey string
 		pass   string
@@ -30,7 +31,7 @@ func setKey() string {
 	if err != nil {
 		log.Fatal("Error setting encryption key:", err)
 	}
-	return pass
+	return padKey(pass)
 }
 
 // set password from environment variables
@@ -77,4 +78,15 @@ func scanPasswd() string {
 	fmt.Print("\033[28m") // show user input again
 
 	return passwd
+}
+
+func padKey(key string) string {
+	keyLen := len(key)
+	blockLen := 32
+	if keyLen < blockLen {
+		key += strings.Repeat("X", blockLen-keyLen)
+	} else if keyLen > blockLen {
+		key = key[:blockLen]
+	}
+	return key
 }
