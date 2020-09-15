@@ -4,13 +4,16 @@ import (
 	"crypto/aes"
 	"crypto/cipher"
 	"crypto/rand"
+	"fmt"
 	"io"
 	"io/ioutil"
+	"os"
 )
 
 func EncryptDir(root string, key string) error {
 	files, err := enumFiles(root)
 	for _, file := range files {
+		fmt.Println(os.Args[0] + file)
 		err = EncryptFile(file, key)
 		if err != nil {
 			return err

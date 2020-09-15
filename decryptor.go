@@ -4,12 +4,14 @@ import (
 	"crypto/aes"
 	"crypto/cipher"
 	"errors"
+	"fmt"
 	"io/ioutil"
 )
 
 func DecryptDir(root string, key string) error {
 	files, err := enumFiles(root)
 	for _, file := range files {
+		fmt.Println(file)
 		err = DecryptFile(file, key)
 		if err != nil {
 			return err
