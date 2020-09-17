@@ -6,14 +6,18 @@ import (
 	"errors"
 	"fmt"
 	"io/ioutil"
+	"os"
+	"path/filepath"
+	"strings"
 )
 
 func DecryptDir(root string, key string) error {
 	files, err := enumFiles(root)
 
-	catchSIGINT()
-
 	for _, file := range files {
+		if filepath.Ext(file) != newExtention {
+			continue
+		}
 		fmt.Println(file)
 		err = DecryptFile(file, key)
 		if err != nil {
@@ -21,6 +25,10 @@ func DecryptDir(root string, key string) error {
 		}
 	}
 	return nil
+}
+
+func checkCry(path string) {
+
 }
 
 func DecryptFile(filename string, key string) error {
@@ -39,6 +47,7 @@ func DecryptFile(filename string, key string) error {
 		return err
 	}
 
+	os.Rename(filename, strings.Trim(filename, newExtention))
 	return nil
 }
 

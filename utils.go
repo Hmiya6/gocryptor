@@ -1,11 +1,8 @@
 package main
 
 import (
-	"fmt"
 	"os"
-	"os/signal"
 	"path/filepath"
-	"syscall"
 )
 
 func enumFiles(root string) ([]string, error) {
@@ -27,13 +24,4 @@ func enumFiles(root string) ([]string, error) {
 		return nil, err
 	}
 	return files, nil
-}
-
-func catchSIGINT() {
-	c := make(chan os.Signal, 1)
-	signal.Notify(c, syscall.SIGINT)
-	go func() {
-		sig := <-c
-		fmt.Printf("Do NOT %v while encrypting\n", sig)
-	}()
 }

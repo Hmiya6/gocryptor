@@ -5,6 +5,10 @@ import (
 	"os"
 )
 
+const (
+	newExtention = ".cry"
+)
+
 func main() {
 	if len(os.Args) != 3 {
 		log.Fatal("invalid number of arguments: <target dir> [e] [d]")
