@@ -9,21 +9,15 @@ import (
 )
 
 // wrapper function to get password
-func setAESKey() string {
-	pass, err := getKeyFromStdin()
+func SetAESKey() string {
+	pass, err := GetKeyFromStdin()
 	if err != nil {
 		log.Fatal("Error setting encryption key:", err)
 	}
 	return padKey(pass)
 }
 
-// set password from environment variables
-func getKeyFromEnv(envKey string) string {
-	key := os.Getenv(envKey)
-	return key
-}
-
-func getKeyFromStdin() (string, error) {
+func GetKeyFromStdin() (string, error) {
 	var key string
 	for {
 		// set password
