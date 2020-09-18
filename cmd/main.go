@@ -13,7 +13,7 @@ func main() {
 	}
 	root := os.Args[1]
 	mode := os.Args[2][:1]
-	passwd := gocryptor.setAESKey()
+	passwd := gocryptor.SetAESKey()
 
 	var err error
 	if mode == "e" {
