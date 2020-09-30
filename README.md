@@ -11,3 +11,7 @@ $ go install github.com/Hmiya6/gocryptor/cmd/gocryptor
 $ export PATH=~/go/bin:$PATH
 $ gocryptor [target directory] [e: encryption]/[d: decryption]
 ```
+
+## TODO
+* concurrent en/de-cryption
+* v2: Imprement RSA encryption
