@@ -1,4 +1,4 @@
-package gocryptor
+package main
 
 import (
 	"bufio"

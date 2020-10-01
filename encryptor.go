@@ -1,4 +1,4 @@
-package gocryptor
+package main
 
 import (
 	"crypto/aes"
@@ -7,7 +7,9 @@ import (
 	"fmt"
 	"io"
 	"io/ioutil"
+	"log"
 	"os"
+	"sync"
 )
 
 func EncryptDir(root string, key string) error {
@@ -16,14 +18,35 @@ func EncryptDir(root string, key string) error {
 		return err
 	}
 
+	pathCh := make(chan string, workerNum)
+	wg := sync.WaitGroup{}
+	for i := 0; i < workerNum; i++ {
+		wg.Add(1)
+		go encryptWorker(pathCh, key, &wg)
+	}
+
 	for _, file := range files {
-		fmt.Println(os.Args[0] + file)
-		err = EncryptFile(file, key)
+		pathCh <- file
+	}
+	close(pathCh)
+	wg.Wait()
+	return nil
+}
+
+func encryptWorker(ch chan string, key string, wg *sync.WaitGroup) {
+	defer wg.Done()
+	for {
+		path, ok := <-ch
+		if !ok {
+			break
+		}
+		fmt.Println(path)
+		err := EncryptFile(path, key)
 		if err != nil {
-			return err
+			log.Println(err)
 		}
 	}
-	return nil
+	return
 }
 
 func EncryptFile(filename string, key string) error {

