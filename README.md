@@ -15,3 +15,4 @@ $ gocryptor [target directory] [e: encryption]/[d: decryption]
 ## TODO
 * concurrent en/de-cryption
 * v2: Imprement RSA encryption
+* Imprement read function
