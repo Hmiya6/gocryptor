@@ -35,11 +35,7 @@ func EncryptDir(root string, key string) error {
 
 func encryptWorker(ch chan string, key string, wg *sync.WaitGroup) {
 	defer wg.Done()
-	for {
-		path, ok := <-ch
-		if !ok {
-			break
-		}
+	for path := range ch {
 		fmt.Println(path)
 		err := EncryptFile(path, key)
 		if err != nil {

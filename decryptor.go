@@ -39,11 +39,7 @@ func DecryptDir(root string, key string) error {
 
 func decryptWorker(ch chan string, key string, wg *sync.WaitGroup) {
 	defer wg.Done()
-	for {
-		path, ok := <-ch
-		if !ok {
-			break
-		}
+	for path := range ch {
 		fmt.Println(path)
 		err := DecryptFile(path, key)
 		if err != nil {
